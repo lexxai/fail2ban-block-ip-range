@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from pprint import pprint
 from subprocess import call
@@ -17,7 +17,7 @@ import os
 tmpf = mkstemp()
 os.close(tmpf[0])
 
-script = 'tail -n 1000 /var/log/fail2ban.log | grep -E "fail2ban.filter.*\[[0-9]+\]:.*\[[^]]+\] Found ([0-9]{1,3}\.){3}[0-9]{1,3}" -o | sed -re "s/fail2ban.filter\s+\[[0-9]+\]:\sINFO\s+\[//; s/\]//; s/Found //;" | sort | uniq -c > ' + tmpf[1]
+script = 'tail -n 1000 /var/log/fail2ban.log | grep -E "fail2ban.filter.*\[[0-9]+\]:.*\[[^]]+\] Found ([0-9]{1,3}\.){3}[0-9]{1,3}" -o |  sed  "s/fail2ban.filter.*INFO.*\[//; s/\]//; s/Found //;" | sort | uniq -c > ' + tmpf[1]
 countLimit = 7
 
 call(script, shell=True)
